@@ -37,7 +37,8 @@ int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	char *cleaned_line;
-	char *command;
+	char *command_pure;
+	char *line_copy;
 	size_t len = 0;
 	ssize_t nread;
 	pid_t child_pid;
@@ -62,30 +63,33 @@ int main(int argc, char *argv[])
 			line[nread - 1] = '\0';
 
 		cleaned_line = trim_spaces(line);
-
 		if (strlen(cleaned_line) == 0)
 			continue;
 
-		command = strtok(cleaned_line, " \t");
-		if (command == NULL)
+		line_copy = strdup(cleaned_line);
+		if (line_copy == NULL)
 			continue;
 
-		args[0] = cleaned_line;
-		args[1] = NULL;
+		command_pure = strtok(line_copy, " \t");
 
-		if (access(args[0], X_OK) == 0)
+		if (command_pure != NULL && access(command_pure, X_OK) == 0)
 		{
 			child_pid = fork();
 			if (child_pid == -1)
 			{
 				perror("Error:");
+				free(line_copy);
 				break;
 			}
 			if (child_pid == 0)
 			{
+				args[0] = cleaned_line;
+				args[1] = NULL;
+
 				if (execve(args[0], args, environ) == -1)
 				{
 					perror(argv[0]);
+					free(line_copy);
 					exit(EXIT_FAILURE);
 				}
 			}
@@ -98,6 +102,7 @@ int main(int argc, char *argv[])
 		{
 			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 		}
+		free(line_copy);
 	}
 	free(line);
 	return (0);
