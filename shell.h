@@ -9,12 +9,13 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
+#include <unistd.h>
+#include <sys/types.h>
 #include <sys/wait.h>
 
 extern char **environ;
 
-int main(void);
+int main(int argc, char *argv[]);
 
 #endif /* SHELL_H */
