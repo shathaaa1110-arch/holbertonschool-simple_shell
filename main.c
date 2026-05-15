@@ -5,29 +5,30 @@
 
 /*
  * main - Entry point for the hsh simple shell.
- * @argc: The number of arguments passed to the program.
- * @argv: An array of strings containing the arguments.
+ * @argc: argument count
+ * @argv: argument vector
  *
- * Return: Always 0 on success.
+ * Return: Always 0 (Success)
  */
 
 int main(int argc, char *argv[])
 {
-    char *line = NULL;
-    size_t len = 0;
-    int count = 0;
+	char *line = NULL;
+	size_t len = 0;
+	int count = 0;
 
-    while (getline(&line, &len, stdin) != -1)
-    {
-        count++;
-        line[strcspn(line, "\n")] = '\0';
+	while (getline(&line, &len, stdin) != -1)
+	{
+		count++;
+		line[strcspn(line, "\n")] = '\0';
 
-        if (access(line, X_OK) == -1)
-        {
-            fprintf(stderr, "%s: %d: %s: not found\n", argv[0], count, line);
-        }
-    }
+		if (access(line, X_OK) == -1)
+		{
+			fprintf(stderr, "%s: %d: %s: not found\n",
+				argv[0], count, line);
+		}
+	}
 
-    free(line);
-    return (0);
+	free(line);
+	return (0);
 }
