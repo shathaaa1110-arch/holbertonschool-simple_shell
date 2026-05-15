@@ -4,14 +4,12 @@
 #include <unistd.h>
 
 /**
- *
- * main - Entry point for the hsh simple shell.
- * @argc: argument count
- * @argv: argument vector
+ * main - Entry point for the simple shell program
+ * @argc: The number of arguments passed to the program
+ * @argv: An array of strings containing the arguments
  *
  * Return: Always 0 (Success)
  */
-
 int main(int argc, char *argv[])
 {
 	char *line = NULL;
