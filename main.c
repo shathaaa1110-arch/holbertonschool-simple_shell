@@ -1,6 +1,32 @@
 #include "shell.h"
 
 /**
+ * trim_spaces - Removes leading and trailing spaces from a string
+ * @str: The string to be trimmed
+ *
+ * Return: A pointer to the trimmed string within the original text
+ */
+char *trim_spaces(char *str)
+{
+	char *end;
+
+	while (*str == ' ' || *str == '\t')
+		str++;
+
+	if (*str == '\0')
+		return (str);
+
+	end = str + strlen(str) - 1;
+	while (end > str && (*end == ' ' || *end == '\t'))
+	{
+		*end = '\0';
+		end--;
+	}
+
+	return (str);
+}
+
+/**
  * main - Entry point for the simple shell
  * @argc: The number of arguments passed to the program
  * @argv: An array of strings containing the arguments
@@ -10,6 +36,7 @@
 int main(int argc, char *argv[])
 {
 	char *line = NULL;
+	char *cleaned_line;
 	size_t len = 0;
 	ssize_t nread;
 	pid_t child_pid;
@@ -33,13 +60,15 @@ int main(int argc, char *argv[])
 		if (nread > 0 && line[nread - 1] == '\n')
 			line[nread - 1] = '\0';
 
-		if (strlen(line) == 0)
+		cleaned_line = trim_spaces(line);
+
+		if (strlen(cleaned_line) == 0)
 			continue;
 
-		args[0] = line;
+		args[0] = cleaned_line;
 		args[1] = NULL;
 
-		if (access(line, X_OK) == 0)
+		if (access(args[0], X_OK) == 0)
 		{
 			child_pid = fork();
 			if (child_pid == -1)
