@@ -65,6 +65,10 @@ int main(int argc, char *argv[])
 		if (strlen(cleaned_line) == 0)
 			continue;
 
+		command = strtok(cleaned_line, " \t");
+		if (command == NULL)
+			continue;
+
 		args[0] = cleaned_line;
 		args[1] = NULL;
 
