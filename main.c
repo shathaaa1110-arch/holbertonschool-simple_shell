@@ -3,7 +3,7 @@
 #include <string.h>
 #include <unistd.h>
 
-/*
+/**
  * main - Entry point for the hsh simple shell.
  * @argc: argument count
  * @argv: argument vector
