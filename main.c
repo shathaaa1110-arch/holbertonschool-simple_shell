@@ -37,6 +37,7 @@ int main(int argc, char *argv[])
 {
 	char *line = NULL;
 	char *cleaned_line;
+	char *command;
 	size_t len = 0;
 	ssize_t nread;
 	pid_t child_pid;
