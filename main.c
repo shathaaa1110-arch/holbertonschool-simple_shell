@@ -4,6 +4,7 @@
 #include <unistd.h>
 
 /**
+ *
  * main - Entry point for the hsh simple shell.
  * @argc: argument count
  * @argv: argument vector
@@ -16,6 +17,7 @@ int main(int argc, char *argv[])
 	char *line = NULL;
 	size_t len = 0;
 	int count = 0;
+	(void)argc;
 
 	while (getline(&line, &len, stdin) != -1)
 	{
