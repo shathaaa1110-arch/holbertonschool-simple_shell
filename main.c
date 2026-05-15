@@ -43,7 +43,7 @@ int main(int argc, char *argv[])
 	ssize_t nread;
 	pid_t child_pid;
 	int status;
-	char *args[2];
+	char *args[3];
 	(void)argc;
 
 	while (1)
@@ -83,13 +83,15 @@ int main(int argc, char *argv[])
 			}
 			if (child_pid == 0)
 			{
-				args[0] = cleaned_line;
-				args[1] = NULL;
+				args[0] = command_pure;
+				args[1] = strtok(NULL, " \t");
+				args[2] = NULL;
 
 				if (execve(args[0], args, environ) == -1)
 				{
 					perror(argv[0]);
 					free(line_copy);
+					free(line);
 					exit(EXIT_FAILURE);
 				}
 			}
