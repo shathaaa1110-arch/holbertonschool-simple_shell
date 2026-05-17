@@ -1,6 +1,20 @@
 #include "shell.h"
 
 /**
+ * print_env - Prints the current environment variables
+ */
+void print_env(void)
+{
+	int i = 0;
+
+	while (environ[i] != NULL)
+	{
+		printf("%s\n", environ[i]);
+		i++;
+	}
+}
+
+/**
  * main - Simple shell main function
  * @ac: Argument count
  * @av: Argument vector
@@ -28,23 +42,26 @@ int main(int ac __attribute__((unused)), char **av)
 		}
 
 		args = parse_command(line);
-
 		if (args[0] != NULL)
 		{
-			/* Check for the exit built-in */
 			if (strcmp(args[0], "exit") == 0)
 			{
 				free(args);
 				free(line);
 				exit(status);
 			}
-
-			status = execute_command(args, av[0]);
+			else if (strcmp(args[0], "env") == 0)
+			{
+				print_env();
+				status = 0;
+			}
+			else
+			{
+				status = execute_command(args, av[0]);
+			}
 		}
-
 		free(args);
 	}
-
 	free(line);
 	return (status);
 }
