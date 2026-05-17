@@ -32,8 +32,12 @@ char *get_path(char *command)
 	int cmd_len, dir_len;
 	struct stat buffer;
 
-	if (stat(command, &buffer) == 0)
-		return (strdup(command));
+	if (strchr(command, '/') != NULL)
+	{
+		if (stat(command, &buffer) == 0)
+			return (strdup(command));
+		return (NULL);
+	}
 
 	path = _getenv("PATH");
 	if (path == NULL)
