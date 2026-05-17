@@ -17,5 +17,7 @@
 extern char **environ;
 
 int main(int argc, char *argv[]);
+void execute_command(char **args, char *program_name);
+char **parse_command(char *line);
 
 #endif /* SHELL_H */
