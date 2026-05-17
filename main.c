@@ -30,7 +30,17 @@ int main(int ac __attribute__((unused)), char **av)
 		args = parse_command(line);
 
 		if (args[0] != NULL)
+		{
+			/* Check for the exit built-in */
+			if (strcmp(args[0], "exit") == 0)
+			{
+				free(args);
+				free(line);
+				exit(status);
+			}
+
 			status = execute_command(args, av[0]);
+		}
 
 		free(args);
 	}
