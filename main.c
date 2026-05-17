@@ -5,7 +5,7 @@
  * @ac: Argument count
  * @av: Argument vector
  *
- * Return: Always 0
+ * Return: Always 0 on success, or error status
  */
 int main(int ac __attribute__((unused)), char **av)
 {
@@ -13,6 +13,7 @@ int main(int ac __attribute__((unused)), char **av)
 	size_t len = 0;
 	ssize_t read;
 	char **args;
+	int status = 0;
 
 	while (1)
 	{
@@ -23,17 +24,17 @@ int main(int ac __attribute__((unused)), char **av)
 		if (read == -1)
 		{
 			free(line);
-			exit(0);
+			exit(status);
 		}
 
 		args = parse_command(line);
 
 		if (args[0] != NULL)
-			execute_command(args, av[0]);
+			status = execute_command(args, av[0]);
 
 		free(args);
 	}
 
 	free(line);
-	return (0);
+	return (status);
 }

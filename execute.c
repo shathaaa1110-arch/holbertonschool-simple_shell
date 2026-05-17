@@ -4,22 +4,24 @@
  * execute_command - Executes a command, handling PATH correctly
  * @args: Array of arguments
  * @program_name: The name of the shell program
+ *
+ * Return: Exit status of the command
  */
-void execute_command(char **args, char *program_name)
+int execute_command(char **args, char *program_name)
 {
 	pid_t child_pid;
 	int status;
 	char *actual_path;
 
 	if (args[0] == NULL)
-		return;
+		return (0);
 
 	actual_path = get_path(args[0]);
 
 	if (actual_path == NULL)
 	{
 		fprintf(stderr, "%s: 1: %s: not found\n", program_name, args[0]);
-		return;
+		return (127);
 	}
 
 	child_pid = fork();
@@ -27,7 +29,7 @@ void execute_command(char **args, char *program_name)
 	{
 		perror("Fork Error");
 		free(actual_path);
-		return;
+		return (1);
 	}
 
 	if (child_pid == 0)
@@ -36,12 +38,15 @@ void execute_command(char **args, char *program_name)
 		{
 			perror(program_name);
 			free(actual_path);
-			exit(1);
+			exit(127);
 		}
 	}
 	else
 	{
 		wait(&status);
 		free(actual_path);
+		if (WIFEXITED(status))
+			return (WEXITSTATUS(status));
 	}
+	return (0);
 }
