@@ -1,0 +1,22 @@
+NAME
+    hsh - simple shell command interpreter
+
+SYNOPSIS
+    ./hsh
+
+DESCRIPTION
+    hsh is a basic UNIX command language interpreter. It reads commands from the standard input and executes them.
+
+FEATURES
+    * Path Resolution: Automatically searches the PATH environment variable.
+    * Error Handling: Prints standard error messages for commands not found.
+
+BUILT-IN COMMANDS
+    env
+        Prints the complete list of current environment variables.
+
+    exit
+        Terminates the shell.
+
+AUTHORS
+    Shatha Fayadh Mohammed Alanzi
