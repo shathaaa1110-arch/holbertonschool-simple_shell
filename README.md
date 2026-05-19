@@ -19,4 +19,5 @@ $ echo "ls" | ./hsh
 * exit: Exits the shell safely.
 
 ## Authors
-* Shatha Fayadh Mohammed Alanzi
+* Shatha Fayadh Alanzi
+* Alzahraa Alhussain 
